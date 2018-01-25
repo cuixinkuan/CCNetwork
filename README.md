@@ -1,7 +1,7 @@
 # CCNetwork
 
 ## CCNetwork是什么
-    CCNetwork是基于[AFNetworking][AFNetworking]封装的iOS网络库，实现了一套高可用性API,提供了更高层次的网络访问抽象。
+    CCNetwork是基于[AFNetworking](https://github.com/AFNetworking/AFNetworking)封装的iOS网络库，实现了一套高可用性API,提供了更高层次的网络访问抽象。
 
 ## CCNetwork提供了哪些功能
 ### 相比AFNetworking,CCNetwork提供了以下更高级的功能：
@@ -37,7 +37,7 @@
     · CCRequest 类：所有的网络请求类需要继承于 CCRequest 类，每一个 CCRequest 类的子类代表一种专门的网络请求。
     具体的用法是，在程序刚启动的回调中，设置好 CCNetworkConfig 的信息，如下所示：
 ### CCNetworkConfig 类
-    ```objectivec
+    ```objective-c
     - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     CCNetworkConfig * config = [CCNetworkConfig sharedConfig];
@@ -54,7 +54,7 @@
     CCRequest 的基本的思想是把每一个网络请求封装成对象。
     每一种网络请求继承 CCRequest 类后，需要用方法覆盖（overwrite）的方式，来指定网络请求的具体信息。如下是一个示例：
     假如我们要向网址 http://www.ceair.com/iphone/register 发送一个 POST 请求，请求参数是 username 和 password。那么，这个类应该如下所示：
-    ```objectivec
+    ```objective-c
     // RegisterApi.h
     #import "CCRequest.h
     @interface RegisterApi : CCRequest
@@ -111,7 +111,7 @@
     通过覆盖 CCRequest 类的 requestArgument 方法，提供了 POST 的信息。这里面的参数 username 和 password 如果有一些特殊字符（如中文或空格），也会被自动编码。
 ### 调用RegisterApi
     在构造完成 RegisterApi 之后，具体如何使用呢？可以在登录的ViewController中，调用RegisterApi，并用 block 的方式来取得网络请求结果：
-    ```objectivec
+    ```objective-c
     RegisterApi * api = [[RegisterApi alloc] initWithUsername:@"username**" password:@"password**"];
     [api startWithCompletionBlockWithSuccess:^(__kindof CCBaseRequest * _Nonnull request) {
     // 你可以直接在这里使用self
@@ -124,7 +124,7 @@
     有些时候由于服务器的Bug，会造成服务器返回一些不合法的数据，如果盲目地信任这些数据可能会造成客户端crash。如果加入大量的验证代码，又使得编程体力活增加，费时费力。
     使用 CCRequest的验证服务器返回值功能，可以很大程度上节省验证代码的编写时间。
     例如，我们要向网址 http://www.ceair.com/iphone/users 发送一个 GET 请求，请求参数是 userId 。我们想获得某一个用户的信息，包括他的昵称和等级，我们需要服务器必须返回昵称（字符串类型）和等级信息（数值类型），则可以覆盖 jsonValidator 方法，实现简单的验证。
-    ```objectivec
+    ```objective-c
     - (id)jsonValidator {
     return @{
     @"nick":[NSString class],
@@ -135,7 +135,7 @@
 ### 使用CDN地址
     如果要使用CDN地址，只需要覆盖 CCRequest 类的 -(BOOL)useCDN; 方法。
     例如我们有一个取图片的接口，则我们可以这么写代码：
-    ```objectivec
+    ```objective-c
     // GetImageApi.h
     #import "CCRequest.h"
     @interface GetImageApi : CCRequest
@@ -168,7 +168,7 @@
     ```
 ### 断点续传
     要启动断点续传功能，只需要覆盖 resumableDownloadPath 方法，指定断点续传时文件的存储路径即可，文件会被自动保存到此路径。如下代码将刚刚的取图片的接口改造成了支持断点续传：
-    ```objectivec
+    ```objective-c
     - (NSString *)resumableDownloadPath {
     NSString * libPath = [NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * cachePath = [libPath stringByAppendingPathComponent:@"Caches"];
@@ -179,7 +179,7 @@
 ### 按时间缓存内容
     想像这样一个场景，假设你在完成一个类似微博的客户端，GetUserInfoApi 用于获得你的某一个好友的资料，因为好友并不会那么频繁地更改昵称，那么短时间内频繁地调用这个接口很可能每次都返回同样的内容，所以我们可以给这个接口加一个缓存。
     在如下示例中，通过覆盖 cacheTimeInSeconds 方法，给 GetUserInfoApi 增加了一个 3 分钟的缓存，3 分钟内调用调 Api 的 start 方法，实际上并不会发送真正的请求。
-    ```objectivec
+    ```objective-c
     #import "GetUserInfoApi.h"
     
     @implementation GetUserInfoApi {
@@ -220,7 +220,7 @@
     CCNetwork还提供了一下两个类：
     · CCBatchRequest 用以方便的发送批量请求。
     · CCChainRequest 用以管理有相互依赖的网络请求。
-    ```objectivec
+    ```objective-c
     // send batch request
     - (void)sendBatchRequest {
     GetImageApi * a = [[GetImageApi alloc] initWithImageId:@"1.jpg"];
@@ -263,7 +263,7 @@
     以上功能所涉及的类和用法可参见[CCNetworkDemo][CCNetworkDemo]
     
 ## 作者
-    CCNetwork的作者是[cuixinkuan][cuixinkuan]
+    CCNetwork的作者是[cuixinkuan](https://github.com/cuixinkuan)
     
 ## 感谢
     CCNetwork是基于AFNetworking进行开发的，网络批量请求和依赖请求的设计思想参考了YTKNetwork的设计思路，感谢他们对开源社区做出的贡献。
