@@ -18,10 +18,12 @@ CCNetwork是基于 [AFNetworking](https://github.com/AFNetworking/AFNetworking) 
 
 ## 哪些项目适合使用CCNetwork
 CCNetwork是笔者为了替换东方航空iOS客户端底层网络库而设计编写的。主要是为了满足东航App对复杂业务网络请求的执行效率和质量的要求，在它所涉及需要的网络层管理需求之上进行了扩展。所以CCNetwork适合一些稍复杂的项目使用，不太适合轻量级的个人小项目。
+
 如果项目中需要缓存网络请求，管理多个网络请求之间的依赖，希望检查服务器返回数据的合法性，那么CCNetwork将会得心应手给你搭建网络请求服务带来很大帮助.如果缓存的网络请求内容需要依赖特定版本号过期，那么CCNetwork将能发挥它最大的优势。当然如果说它有什么不好，那就是你的项目非常简单，使用CCNetwork反而没有直接用AFNetworking将请求逻辑写在Controller中方便，所以简单的项目并不很适合使用CCNetwork。
     
 ## CCNetwork的设计思想
 基本思想是把每一个网络请求封装成对象。所以使用CCNetwork，你的每一个请求都需要继承CCRequest类，通过覆盖父类的一些方法来构造指定的网络请求。
+
 把每一个网络请求封装成对象实际上是使用了设计模式中的Command模式，它有一下优点：
 * 将网络请求与具体的第三方依赖库隔离，方便以后更换底层网络库。东航App最初是基于ASIHttpRequest设计的网络层，使用CCNetwork，只需要很短的时间就可以轻松切换到AFNetworking。
 * 方便在基类处理公共逻辑，例如版本号信息、CDN地址等就可以在基类中处理。
@@ -33,8 +35,11 @@ CCNetwork是笔者为了替换东方航空iOS客户端底层网络库而设计�
     
 ## 使用说明
 CCNetwork包含以下几个基本的类：
-· CCNetworkConfig类：用于统一设置网络请求的服务器和 CDN 的地址。
-· CCRequest 类：所有的网络请求类需要继承于 CCRequest 类，每一个 CCRequest 类的子类代表一种专门的网络请求。
+
+- CCNetworkConfig类：用于统一设置网络请求的服务器和 CDN 的地址。
+
+- CCRequest 类：所有的网络请求类需要继承于 CCRequest 类，每一个 CCRequest 类的子类代表一种专门的网络请求。
+
 具体的用法是，在程序刚启动的回调中，设置好 CCNetworkConfig 的信息，如下所示：
 ### CCNetworkConfig 类
 ```objective-c
@@ -106,9 +111,13 @@ return @{
 @end
 ```
 在上面这个示例中可以看到：
+
 通过覆盖 CCRequest 类的 requestUrl 方法，实现了指定网址信息。并且只需要指定除去域名剩余的网址信息，因为域名信息在 CCNetworkConfig 中已经设置过了。
+
 通过覆盖 CCRequest 类的 requestMethod 方法，实现了指定 POST 方法来传递参数。
+
 通过覆盖 CCRequest 类的 requestArgument 方法，提供了 POST 的信息。这里面的参数 username 和 password 如果有一些特殊字符（如中文或空格），也会被自动编码。
+
 ### 调用RegisterApi
 在构造完成 RegisterApi 之后，具体如何使用呢？可以在登录的ViewController中，调用RegisterApi，并用 block 的方式来取得网络请求结果：
 ```objective-c
@@ -256,11 +265,11 @@ chainReq.delegate = self;
 }
 ```
 还可以定制网络请求的 HeaderField：
-通过覆盖requestHeaderFieldValueDictionary方法返回一个dictionary对象来自定义请求的HeaderField，返回的dictionary，其key即为HeaderField的keyvalue为HeaderField的Value，需要注意的是key和value都必须为string对象。
+- 通过覆盖requestHeaderFieldValueDictionary方法返回一个dictionary对象来自定义请求的HeaderField，返回的dictionary，其key即为HeaderField的keyvalue为HeaderField的Value，需要注意的是key和value都必须为string对象。
     还可以定制 buildCustomUrlRequest：
-通过覆盖buildCustomUrlRequest方法，返回一个NSURLRequest对象来达到完全自定义请求的需求。该方法定义在 CCBaseRequest类
+- 通过覆盖buildCustomUrlRequest方法，返回一个NSURLRequest对象来达到完全自定义请求的需求。该方法定义在 CCBaseRequest类
 ### 相关Demo
-以上功能所涉及的类和用法可参见[CCNetworkDemo][CCNetworkDemo]
+以上功能所涉及的类和用法可参见 [CCNetworkDemo](https://github.com/cuixinkuan/CCNetworkDemo)
     
 ## 作者
 CCNetwork的作者是 [cuixinkuan](https://github.com/cuixinkuan)
