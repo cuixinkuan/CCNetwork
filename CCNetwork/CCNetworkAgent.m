@@ -20,7 +20,7 @@
 #define Lock() pthread_mutex_lock(&_lock)
 #define Unlock() pthread_mutex_unlock(&_lock)
 
-#define KCCNetworkIncompleteDownloadFolderName @"Imcomplete"
+#define KCCNetworkIncompleteDownloadFolderName @"Incomplete"
 
 @implementation CCNetworkAgent {
     AFHTTPSessionManager * _manager;
@@ -179,11 +179,14 @@
     NSURLRequest * customUrlRequest = [request buildCustomUrlRequest];
     if (customUrlRequest) {
         __block NSURLSessionDataTask * dataTask = nil;
-        dataTask = [_manager dataTaskWithRequest:customUrlRequest uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
-            // Do something you want..
-        } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
-            // Do something you want..
-        } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        //        dataTask = [_manager dataTaskWithRequest:customUrlRequest uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+        //            // Do something you want..
+        //        } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+        //            // Do something you want..
+        //        } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+        //            [self handleRequestResult:dataTask responseObject:responseObject error:error];
+        //        }];
+        dataTask = [_manager dataTaskWithRequest:customUrlRequest completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             [self handleRequestResult:dataTask responseObject:responseObject error:error];
         }];
         request.requestTask = dataTask;
@@ -426,11 +429,14 @@
         request = [requestSerializer requestWithMethod:method URLString:URLString parameters:parameters error:error];
     }
     __block NSURLSessionDataTask * dataTask = nil;
-    dataTask = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
-       // Do something you want..
-    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
-        // Do something you want..
-    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    //    dataTask = [_manager dataTaskWithRequest:request uploadProgress:^(NSProgress * _Nonnull uploadProgress) {
+    //       // Do something you want..
+    //    } downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
+    //        // Do something you want..
+    //    } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+    //        [self handleRequestResult:dataTask responseObject:responseObject error:error];
+    //    }];
+    dataTask = [_manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         [self handleRequestResult:dataTask responseObject:responseObject error:error];
     }];
     return dataTask;
@@ -536,3 +542,4 @@
 }
 
 @end
+
