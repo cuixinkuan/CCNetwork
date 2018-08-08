@@ -226,9 +226,9 @@ return 60 * 3;
 ```
 该缓存逻辑对上层是透明的，所以上层可以不用考虑缓存逻辑，每次调用 GetUserInfoApi 的 start 方法即可。GetUserInfoApi 只有在缓存过期时，才会真正地发送网络请求。
 ### 高级用法
-CCNetwork还提供了一下两个类：
-· CCBatchRequest 用以方便的发送批量请求。
-· CCChainRequest 用以管理有相互依赖的网络请求。
+CCNetwork还提供了以下两个类：
+·(1) CCBatchRequest 用以方便的发送批量请求。
+·(2) CCChainRequest 用以管理有相互依赖的网络请求。
 ```objective-c
 // send batch request
 - (void)sendBatchRequest {
