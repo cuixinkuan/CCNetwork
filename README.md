@@ -265,14 +265,14 @@ chainReq.delegate = self;
 }
 ```
 还可以定制网络请求的 HeaderField：
-- 通过覆盖requestHeaderFieldValueDictionary方法返回一个dictionary对象来自定义请求的HeaderField，返回的dictionary，其key即为HeaderField的keyvalue为HeaderField的Value，需要注意的是key和value都必须为string对象。
+- 通过覆盖requestHeaderFieldValueDictionary方法返回一个dictionary对象来自定义请求的HeaderField，返回的dictionary，其key即为HeaderField的key,value为HeaderField的Value，需要注意的是key和value都必须为string对象。
     还可以定制 buildCustomUrlRequest：
 - 通过覆盖buildCustomUrlRequest方法，返回一个NSURLRequest对象来达到完全自定义请求的需求。该方法定义在 CCBaseRequest类
 ### 相关Demo
 以上功能所涉及的类和用法可参见 [CCNetworkDemo](https://github.com/cuixinkuan/CCNetworkDemo)
     
 ## 作者
-CCNetwork的作者是 [cuixinkuan](https://github.com/cuixinkuan)
+CCNetwork的作者是 [cuixinkuan](https://github.com/cuixinkuan),欢迎访问(也可浏览他的简书[@天心鸥兹](https://www.jianshu.com/u/73840643eb74))
     
 ## 感谢
 CCNetwork是基于AFNetworking进行开发的，网络批量请求和依赖请求的设计思想参考了YTKNetwork的设计思路，感谢他们对开源社区做出的贡献。
