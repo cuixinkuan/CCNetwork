@@ -31,7 +31,12 @@ CCNetwork是笔者为了替换东方航空iOS客户端底层网络库而设计�
 * 方便做对象的持久化。
     
 ## 如何集成到你的项目里
-目前还没有支持pod，你可以直接找到“CCNetwork”文件夹，并将其中所有的内容拷贝，直接加入到你的项目中，在需要使用的类头部引入 #import "CCNetwork.h" 头文件即可。注意CCNetwork是基于AFNetworking的封装，依赖 AFNetworking 3.0 + 版本
+### CocoaPods
+* 1. 在 Podfile 中添加 pod 'CCNetwork', '~>0.0.1'
+* 2. 执行 pod install 或 pod update
+* 3. 导入 #import "CCNetwork.h"
+### 手动导入
+你可以直接找到“CCNetwork”文件夹，并将其中所有的内容拷贝，直接加入到你的项目中，在需要使用的类头部引入 #import "CCNetwork.h" 头文件即可。注意CCNetwork是基于AFNetworking的封装，依赖 AFNetworking 3.0 + 版本
     
 ## 使用说明
 CCNetwork包含以下几个基本的类：
